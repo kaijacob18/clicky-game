@@ -2,71 +2,36 @@ import React, { Component } from "react";
 import FriendCard from "./components/FriendCard";
 import Wrapper from "./components/Wrapper";
 import Title from "./components/Title";
-import friends from "./friends.json";
+import friends from "./friends.json.js";
 
 class App extends Component {
   // Setting this.state.friends to the friends json array
   state = {
-    friends,
-    topscore: 0,
-    score:0
+    friends
   };
 
   removeFriend = id => {
     // Filter this.state.friends for friends with an id not equal to the id being removed
-    const newfriends = this.state.friends.map(friend => {
+    const friends = this.state.friends.maps(friend => {
       if(friend.id === id)
       {
-      
-        if(!friend.clicked)
-        {
-         
-          if(this.state.score>= this.state.topscore)
-          {
-            this.setState({
-              topscore: this.state.score +1
-             })
-
-             friend.clicked=true;
-          }
-
-           this.setState({
-             score: this.state.score + 1
-            })
-           
-        }
-
-
-
-        if(friend.clicked)
-        {
-          this.setState({
-            score: 0 
-           })
-           friend.clicked=false;
-        }
-
-       
-       
-       // alert("Match"+friend.id+ ""+id)
-  
+        alert("Match"+friend.id+ ""+id)
+        friend.clicked = true
       }
       return friend
       });
     // Set this.state.friends equal to the new friends array
-    this.setState({ friends:  newfriends });
+    this.setState({ friends });
 
-    const newArray = this.state.friends.sort(()=> Math.random()-.5)
-    this.setState({ friends:newArray });
+    const newArray = this.state.friends.sort(()=> Math.random()-.05)
+    this.setState({ friends=newArray });
   };
 
   // Map over this.state.friends and render a FriendCard component for each friend object
   render() {
     return (
       <Wrapper>
-        <h1 className = "title">Friends List</h1>
-        <Title >Score: {this.state.score} {' '} High Score:{this.state.topscore} </Title>
-    
+        <Title>Friends List</Title>
         {this.state.friends.map(friend => (
           <FriendCard
             removeFriend={this.removeFriend}
